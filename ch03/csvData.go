@@ -47,8 +47,8 @@ func saveFile(filepath string) error {
 	csvwriter := csv.NewWriter(csvfile)
 	// Changing the default field delimiter to tab
 	csvwriter.Comma = '#'
-	if len(os.Args) > 1 && len(os.Args[1]) > 0 {
-		csvwriter.Comma = ([]rune(os.Args[1]))[0]
+	if len(os.Args) > 3 && len(os.Args[1]) > 0 {
+		csvwriter.Comma = ([]rune(os.Args[3]))[0]
 	}
 
 	for _, row := range myData {
@@ -60,7 +60,7 @@ func saveFile(filepath string) error {
 }
 
 func main() {
-	if len(os.Args) != 3 {
+	if len(os.Args) < 3 {
 		fmt.Println("csvData input output!")
 		return
 	}
