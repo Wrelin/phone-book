@@ -20,7 +20,7 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
           IMAGE_NAME: gopost
         run: |
-          cd ch05/main
+          cd ch05
           docker images
           docker build -t "$IMAGE_NAME" .
           docker images

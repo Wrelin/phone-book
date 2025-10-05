@@ -7,8 +7,9 @@ FROM golang:1.25.1-alpine3.22 AS builder
 # Git is required for fetching the dependencies.
 RUN apk update && apk add --no-cache git
 
-RUN mkdir /pro
-ADD ./usePost05.go /pro/
+RUN mkdir /pro && mkdir /package
+ADD ./main /pro/
+ADD ./package /package/
 WORKDIR /pro
 RUN go mod tidy
 RUN go build -o server usePost05.go
