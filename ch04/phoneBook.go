@@ -260,8 +260,8 @@ func (a PhoneBook[T]) Swap(i, j int) {
 }
 
 func main() {
-	arguments := os.Args
-	if len(arguments) == 1 {
+	arguments := os.Args[1:]
+	if len(arguments) <= 0 {
 		fmt.Println("Usage: insert|delete|search|list <arguments>")
 		return
 	}
@@ -285,13 +285,13 @@ func main() {
 	}
 
 	// Differentiating between the commands
-	switch arguments[1] {
+	switch arguments[0] {
 	case "insert":
-		if len(arguments) < 4 {
-			fmt.Println("Usage: insert Name Telephone Surname")
+		if len(arguments) < 3 {
+			fmt.Println("Usage: insert Name Telephone <Surname>")
 			return
 		}
-		t := strings.ReplaceAll(arguments[3], "-", "")
+		t := strings.ReplaceAll(arguments[2], "-", "")
 		if !matchTel(t) {
 			fmt.Println("Not a valid telephone number:", t)
 			return
@@ -300,13 +300,13 @@ func main() {
 		if len(data) > 0 {
 			switch data[0].(type) {
 			case Entry:
-				if len(arguments) != 4 {
-					fmt.Println("Not valid argument count, already use 3, current", len(arguments)-1)
+				if len(arguments) != 3 {
+					fmt.Println("Not valid argument count, already use 3, current", len(arguments))
 					return
 				}
 			case EntryWithSurname:
-				if len(arguments) < 5 {
-					fmt.Println("Not valid argument count, already use 4, current", len(arguments)-1)
+				if len(arguments) < 4 {
+					fmt.Println("Not valid argument count, already use 4, current", len(arguments))
 					return
 				}
 			}
@@ -314,10 +314,10 @@ func main() {
 
 		var err error
 		var temp EntryInterface
-		if len(arguments) == 4 {
-			temp = initEntry(arguments[2], t)
+		if len(arguments) == 3 {
+			temp = initEntry(arguments[1], t)
 		} else {
-			temp = initEntryWithSurname(arguments[2], arguments[4], t)
+			temp = initEntryWithSurname(arguments[1], arguments[3], t)
 		}
 
 		// If it was nil, there was an error
@@ -330,11 +330,11 @@ func main() {
 			return
 		}
 	case "delete":
-		if len(arguments) != 3 {
+		if len(arguments) <= 2 {
 			fmt.Println("Usage: delete Number")
 			return
 		}
-		t := strings.ReplaceAll(arguments[2], "-", "")
+		t := strings.ReplaceAll(arguments[1], "-", "")
 		if !matchTel(t) {
 			fmt.Println("Not a valid telephone number:", t)
 			return
@@ -344,11 +344,11 @@ func main() {
 			fmt.Println(err)
 		}
 	case "search":
-		if len(arguments) != 3 {
+		if len(arguments) <= 2 {
 			fmt.Println("Usage: search Number")
 			return
 		}
-		t := strings.ReplaceAll(arguments[2], "-", "")
+		t := strings.ReplaceAll(arguments[1], "-", "")
 		if !matchTel(t) {
 			fmt.Println("Not a valid telephone number:", t)
 			return
@@ -360,7 +360,7 @@ func main() {
 		}
 		fmt.Println(temp)
 	case "list":
-		isReverse := len(arguments) >= 3 && arguments[2] == "reverse"
+		isReverse := len(arguments) >= 2 && arguments[1] == "reverse"
 		list(isReverse)
 	default:
 		fmt.Println("Not a valid option")
