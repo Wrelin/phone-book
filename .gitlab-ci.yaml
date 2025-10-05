@@ -1,0 +1,24 @@
+image: golang:1.25.1
+
+stages:
+  - download
+  - execute
+
+compile:
+  stage: download
+  script:
+    - echo "Compiling usePost05.go"
+    - mkdir bin
+    - cd ch05/main
+    - go mod tidy
+    - go build -o ./bin/usePost05 usePost05.go
+  artifacts:
+    paths:
+      - bin/
+
+execute:
+  stage: execute
+  script:
+    - echo "Executing usePost05"
+    - ls -l bin
+    - ./bin/usePost05
