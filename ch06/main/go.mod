@@ -4,7 +4,13 @@ go 1.25.1
 
 replace github.com/wrelin/cobra => ../go-cobra
 
-require github.com/wrelin/cobra v0.0.0-00010101000000-000000000000
+replace github.com/wrelin/phone-book => ../phone-book
+
+require (
+	github.com/wrelin/cobra v0.0.0-00010101000000-000000000000
+	github.com/wrelin/phone-book v0.0.0-00010101000000-000000000000
+	gopkg.in/yaml.v2 v2.4.0
+)
 
 require (
 	github.com/fsnotify/fsnotify v1.9.0 // indirect

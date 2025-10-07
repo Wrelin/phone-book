@@ -1,0 +1,4 @@
+image: Golang
+matrix:
+  docker: python
+  version: [2.7, 3.9]
